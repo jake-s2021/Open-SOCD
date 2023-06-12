@@ -70,13 +70,13 @@ unsigned char handle_right_neutral(){
 unsigned char handle_left_major(){
 
     return (!(PORTA & (1<<PA6)) && (LEFT && !RIGHT || LEFT && last_pressed == 1) ) 
-    || ((PORTA & (1<<PA6)) && RIGHT) || ((PORTA & (1<<PA6) && !LEFT)); 
+    || ((PORTA & (1<<PA6)) && RIGHT && !LEFT) || ((PORTA & (1<<PA6) && !LEFT)); 
 
 }
 unsigned char handle_right_major(){
 
     return (!(PORTA & (1<<PA7)) && (RIGHT && !LEFT || RIGHT && last_pressed == 0) )
-    || (PORTA & (1<<PA7) && LEFT) || ((PORTA & (1<<PA7) && !RIGHT));
+    || (PORTA & (1<<PA7) && LEFT && !RIGHT) || ((PORTA & (1<<PA7) && !RIGHT));
 
 }
 void handle_last_pressed(){
