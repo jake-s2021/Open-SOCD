@@ -2,8 +2,9 @@
 #define LEFT READ_PA2_IN
 
 
-unsigned char last_pressed = 2;
-//unsigned char both = 0;
+
+unsigned char both = 0;
+
 /*
 IN:
 UP = PA0
@@ -38,7 +39,7 @@ unsigned char handle_up_neutral(){
     unsigned char C = (READ_PA1_IN);
     unsigned char D =  (PORTA & (1<<PA5));
 
-    return (!A && B && !C || !A && B && !C || A && !B && !C || B && C && A || B && C && D);
+    return ((!A && B && !C) || (!A && B && !C) || (A && !B && !C) || (B && C && A) || (B && C && D));
 }
 unsigned char handle_down(){
     unsigned char A = (READ_PA0_IN);
@@ -46,7 +47,7 @@ unsigned char handle_down(){
     unsigned char C = (READ_PA1_IN);
     unsigned char D =  (PORTA & (1<<PA5));
 
-    return (!A && C && !D || !C && D && !B || !C && D && !A || A && D && B || A && D && C);
+    return ((!A && C && !D) || (!C && D && !B) || (!C && D && !A) || (A && D && B) || (A && D && C));
 
 }
 unsigned char handle_left_neutral(){
@@ -55,7 +56,7 @@ unsigned char handle_left_neutral(){
     unsigned char C = (READ_PA3_IN);
     unsigned char D =  (PORTA & (1<<PA7));
 
-    return (!A && B && !C || !A && B && !C || A && !B && !C || B && C && A || B && C && D);
+    return ((!A && B && !C) || (!A && B && !C) || (A && !B && !C) || (B && C && A) || (B && C && D));
 
 }
 unsigned char handle_right_neutral(){
@@ -64,58 +65,33 @@ unsigned char handle_right_neutral(){
     unsigned char C = (READ_PA3_IN);
     unsigned char D =  (PORTA & (1<<PA7));
 
-    return (!A && C && !D || !C && D && !B || !C && D && !A || A && D && B || A && D && C);
+    return ((!A && C && !D) || (!C && D && !B) || (!C && D && !A) || (A && D && B) || (A && D && C));
 
 }
 unsigned char handle_left_major(){
-
-    return (!(PORTA & (1<<PA6)) && (LEFT && !RIGHT || LEFT && last_pressed == 1) ) 
-    || ((PORTA & (1<<PA6)) && RIGHT) || ((PORTA & (1<<PA6) && !LEFT)); 
+   
+    if(!both && !(PORTA & (1<<PA6)) && LEFT && (PORTA & (1<<PA7))){
+          PORTA ^= (1 << PA7);
+          both = 1;
+          return 1;
+      }
+    return ((!(PORTA & (1<<PA6)) && (LEFT && !RIGHT)) || ((PORTA & (1<<PA6)) && !LEFT));  
     
-    /*
-            
-        if(!both && !(PORTA & (1<<PA6)) && LEFT && (PORTA & (1<<PA7)){
-              PORTA ^= (1 << PA7);
-              both = 1;
-              return 1;
-          }
-        return (!(PORTA & (1<<PA6)) && (LEFT && !RIGHT) || ((PORTA & (1<<PA6) && !LEFT));  
-    
-    */
-    
-
 }
 unsigned char handle_right_major(){
 
-    return (!(PORTA & (1<<PA7)) && (RIGHT && !LEFT || RIGHT && last_pressed == 0) )
-    || (PORTA & (1<<PA7) && LEFT) || ((PORTA & (1<<PA7) && !RIGHT));
-    
-    /*
-        if(!both && !(PORTA & (1<<PA7)) && RIGHT && (PORTA & (1<<PA6))){
-            PORTA ^= (1 << PA6);
-            both = 1;
-            return 1;
-          }
-         return (!(PORTA & (1<<PA7)) && (RIGHT && !LEFT) || ((PORTA & (1<<PA7) && !RIGHT));
-          
-    */
-    
-
-}
-void handle_last_pressed(){
-
-    if(LEFT && !RIGHT){
-        last_pressed = 0;
-    }
-    else if(RIGHT && !LEFT){
-        last_pressed = 1;
-    }
-    
-    /*if(!(LEFT &&  RIGHT){
-            both = 0;
+    if(!both && !(PORTA & (1<<PA7)) && RIGHT && (PORTA & (1<<PA6))){
+        PORTA ^= (1 << PA6);
+        both = 1;
+        return 1;
       }
-     */
+    return ((!(PORTA & (1<<PA7)) && (RIGHT && !LEFT)) || ((PORTA & (1<<PA7)) && !RIGHT));
+          
+}
+void handle_both_lr(){
 
+    if(!(LEFT &&  RIGHT)){
+            both = 0;
+    }
     
-
 }

@@ -48,7 +48,7 @@ int main(){
             PORTA ^= (handle_down() << PA5);
             PORTA ^= (handle_left_major() << PA6);
             PORTA ^= (handle_right_major() << PA7);
-            handle_last_pressed();
+            handle_both_lr();
         }
         while(!READ_PB0_IN && READ_PB1_IN){
             PORTA ^= (handle_up_priority() << PA4);
@@ -62,7 +62,7 @@ int main(){
             PORTA ^= (handle_down() << PA5);
             PORTA ^= (handle_left_major() << PA6);
             PORTA ^= (handle_right_major() << PA7);
-            handle_last_pressed();
+            handle_both_lr();
         }
         while(!READ_PB0_IN && !READ_PB1_IN){
             PORTA ^= (handle_up_neutral() << PA4);
