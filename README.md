@@ -12,6 +12,7 @@ download the .hex file [here](https://github.com/jake-s2021/Open-SOCD/releases)
 and make sure you have avrdude installed on your target operating system
 
 Windows: install WinAVR
+
 Linux and MacOS: install these dependancies
 
 ```
