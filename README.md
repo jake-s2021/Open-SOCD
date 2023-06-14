@@ -22,7 +22,7 @@ gcc-avr avr-libc avrdude
 Use this command to upload the hex file. your -p option will change depending on what programmer you use.
 
 ```
-avrdude -v -p attiny84 -c usbtiny -B0.3 -e -Uefuse:w:0xFF:m -Uhfuse:w:0b11010111:m -Ulfuse:w:0xE2:m -U flash:w:socd.hex:i -F -P usb
+avrdude -v -p attiny84 -c usbtiny -e -Uefuse:w:0xFF:m -Uhfuse:w:0b11010111:m -Ulfuse:w:0xE2:m -U flash:w:socd.hex:i -F -P usb
 
 ```
 
