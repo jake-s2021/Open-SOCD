@@ -4,6 +4,7 @@
 
 
 unsigned char both = 0;
+unsigned char up_guard = 0;
 
 /*
 IN:
@@ -28,9 +29,17 @@ UD = PB1
 
 unsigned char handle_up_priority(){
     unsigned char A = (READ_PA0_IN);
-    unsigned char C = (PORTA & (1<<PA4));
 
-    return A != C;
+    if(A && !up_guard){
+        up_guard =1;
+        return 1;
+    }
+    else if(!A && up_guard){
+        up_guard =0;
+        return 1;
+    }
+
+    return 0;
 
 }
 unsigned char handle_up_neutral(){
