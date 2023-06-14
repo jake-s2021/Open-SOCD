@@ -11,7 +11,7 @@ download the .hex file [here](https://github.com/jake-s2021/Open-SOCD/releases)
 
 and make sure you have avrdude installed on your target operating system
 
-Windows: install WinAVR
+Windows: install [WinAVR](https://sourceforge.net/projects/winavr/)
 
 Linux and MacOS: install these dependancies
 
@@ -19,7 +19,7 @@ Linux and MacOS: install these dependancies
 gcc-avr avr-libc avrdude
 ``` 
 
-Use this command to upload the hex file. your -p option will change depending on what programmer you use.
+Use this command in PowerShell/terminal to upload the hex file. your -c option will change depending on what programmer you use.
 
 ```
 avrdude -v -p attiny84 -c usbtiny -e -Uefuse:w:0xFF:m -Uhfuse:w:0b11010111:m -Ulfuse:w:0xE2:m -U flash:w:socd.hex:i -F -P usb
